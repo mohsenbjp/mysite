@@ -10,8 +10,7 @@ def blog_home(request):
 
 def blog_single(request,pid):
     posts=get_object_or_404(Post,id=pid,status=1)
-    num_post = Post.objects.filter(author=request.user).count()
-    context={'posts':posts,'num_post':num_post}
+    context={'posts':posts}
     return render(request,'blog/blog-single.html',context)
 
 # def test(request,pid):
