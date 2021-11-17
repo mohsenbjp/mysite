@@ -12,13 +12,14 @@ def blog_home(request,cat_name=None,author_username=None):
     if author_username:
         posts=posts.filter(author__username=author_username)
 
-    # posts=Paginator(posts,3)
-    # try:
-    #     page_number=request.GET.get('page')
-    # except PageNotAnInteger:
-    #     posts=posts.get_page(1)
-    # except EmptyPage:
-    #     posts=posts.get_page(1)
+    posts=Paginator(posts,3)
+    try:
+        page_number=request.GET.get('page')
+        posts=posts.get_page(page_number)
+    except PageNotAnInteger:
+        posts=posts.get_page(1)
+    except EmptyPage:
+        posts=posts.get_page(1)
 
     context={'posts':posts}
     return render(request,'blog/blog-home.html',context)
