@@ -4,13 +4,15 @@ from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.utils import timezone
 # import datetime
 # Create your views here.
-def blog_home(request,cat_name=None,author_username=None):
+def blog_home(request,cat_name=None,author_username=None,tag_name=None):
     posts=Post.objects.filter(status=1)
     posts=posts.filter(published_date__lte=timezone.now())
     if cat_name:
         posts=posts.filter(category__name=cat_name)
     if author_username:
         posts=posts.filter(author__username=author_username)
+    if tag_name:
+        posts=posts.filter(tags__name__in=tag_name)
 
     posts=Paginator(posts,3)
     try:

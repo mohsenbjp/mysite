@@ -1,9 +1,11 @@
 from django.contrib import admin
 from .models import Post,Category
+from django_summernote.admin import SummernoteModelAdmin
 # Register your models here.
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(SummernoteModelAdmin):
     date_hierarchy='created_date'
     empty_value_display='-empty-'
+    summernote_fields=('content',)
     list_display=('title','counted_views','status','published_date','created_date')
     list_filter = ('title','status',)
     ordering=['-created_date']
