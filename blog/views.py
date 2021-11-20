@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-from .models import Post
+from .models import Post,Comment
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.utils import timezone
 # import datetime
@@ -29,6 +29,7 @@ def blog_home(request,cat_name=None,author_username=None,tag_name=None):
 
 def blog_single(request,pid):
     posts=get_object_or_404(Post,id=pid,status=1)
+    # comments=Comment.objects.filter(posts=posts.id,approved=True).order_by('-created_date')
     posts.counted_views+=1
     posts.save()
     context={'posts':posts}
