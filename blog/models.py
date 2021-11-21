@@ -24,6 +24,10 @@ class Post(models.Model):
     published_date=models.DateTimeField(null=True)
     created_date=models.DateTimeField(auto_now_add = True)
     updated_date=models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.title
+    def get_absolute_url(self):
+        return reverse('blog:single',kwargs={'pid':self.id})
 
 class Comment(models.Model):
     post=models.ForeignKey(Post,on_delete=models.CASCADE)
@@ -34,10 +38,5 @@ class Comment(models.Model):
     approved=models.BooleanField(default=False)
     created_date=models.DateTimeField(auto_now_add = True)
     updated_date=models.DateTimeField(auto_now=True)
-
-
     def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse('blog:single',kwargs={'pid':self.id})
+        return self.name

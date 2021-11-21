@@ -1,6 +1,8 @@
 from django.shortcuts import render,get_object_or_404
 from .models import Post,Comment
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from blog.forms import CommentForm
+from django.contrib import messages
 from django.utils import timezone
 # import datetime
 # Create your views here.
@@ -28,12 +30,23 @@ def blog_home(request,cat_name=None,author_username=None,tag_name=None):
 
 
 def blog_single(request,pid):
-    posts=get_object_or_404(Post,id=pid,status=1)
-    # comments=Comment.objects.filter(posts=posts.id,approved=True).order_by('-created_date')
-    posts.counted_views+=1
-    posts.save()
-    context={'posts':posts}
-    return render(request,'blog/blog-single.html',context)
+    if request.method =='POST':
+        form=CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request,messages.SECCESS,'aqa shod')
+        else:
+            messages.add_message(request,messages.ERROR,'aqa nashod')
+    else:
+        posts=get_object_or_404(Post,id=pid,status=1)
+        posts.counted_views+=1
+        posts.save()
+
+        post=get_object_or_404(Post,id=pid,status=1)
+        comments=Comment.objects.filter(post=post.id,approved=True).order_by('-created_date')
+
+        context={'posts':posts,'comments':comments}
+        return render(request,'blog/blog-single.html',context)
 
 def blog_search(request):
     posts=Post.objects.filter(status=1)
