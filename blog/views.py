@@ -45,8 +45,36 @@ def blog_single(request,pid):
         post=get_object_or_404(Post,id=pid,status=1)
         comments=Comment.objects.filter(post=post.id,approved=True).order_by('-created_date')
 
-        context={'posts':posts,'comments':comments}
+
+
+        #1
+        # if Post.objects.filter(id=pid+1,status=1).exists():
+        next_post = Post.objects.filter(id=pid+1,published_date__gt=post.published_date).order_by('published_date')
+        previous_post = Post.objects.filter(id=pid-1,published_date__lt=post.published_date).order_by('published_date')
+
+
+        #2
+        # post=get_object_or_404(Post,id=pid,status=1)
+        # post=post.filter(published_date__lte==post.published_date)
+
+
+
+
+
+
+        # print(next_post.values_list('content', flat=True))
+        # next_post = posts.get_next_by_published_date()
+        print(next_post)
+        print(previous_post)
+
+        context={'posts':posts,'comments':comments,'next_post':next_post,'previous_post':previous_post}
         return render(request,'blog/blog-single.html',context)
+
+
+
+
+
+
 
 def blog_search(request):
     posts=Post.objects.filter(status=1)
