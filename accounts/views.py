@@ -33,5 +33,6 @@ def signup_view(request):
             form.save()
             return redirect('/')
     form=UserCreationForm()
+    print(form)
     context={'form':form}
     return render(request,'accounts/signup.html',context)

@@ -45,12 +45,35 @@ def blog_single(request,pid):
         post=get_object_or_404(Post,id=pid,status=1)
         comments=Comment.objects.filter(post=post.id,approved=True).order_by('-created_date')
 
+        #3
+        '''
 
+        p=Post.objects.filter(published_date__lt=post.published_date).order_by('-published_date')
+        n=Post.objects.filter(published_date__gt=post.published_date).order_by('published_date')
+
+
+        for i in n:
+            print(i.status)
+            if i.status == True:
+                next_post = Post.objects.filter(id=i.id,published_date__gt=post.published_date).order_by('published_date')
+                break
+
+        for j in p:
+            print(j.status)
+            if j.status == True:
+                previous_post = Post.objects.filter(id=j.id,published_date__lt=post.published_date).order_by('published_date')
+                break
+        '''
+        postt = get_object_or_404(Post,id__lt=pid,id__gt=pid-2,status=1)
+        print(postt)
+
+        context={'posts':posts,'comments':comments}
+        return render(request,'blog/blog-single.html',context)
 
         #1
         # if Post.objects.filter(id=pid+1,status=1).exists():
-        next_post = Post.objects.filter(id=pid+1,published_date__gt=post.published_date).order_by('published_date')
-        previous_post = Post.objects.filter(id=pid-1,published_date__lt=post.published_date).order_by('published_date')
+
+
 
 
         #2
@@ -59,16 +82,12 @@ def blog_single(request,pid):
 
 
 
-
-
-
         # print(next_post.values_list('content', flat=True))
         # next_post = posts.get_next_by_published_date()
-        print(next_post)
-        print(previous_post)
+        # print(next_post)
+        # print(previous_post)
 
-        context={'posts':posts,'comments':comments,'next_post':next_post,'previous_post':previous_post}
-        return render(request,'blog/blog-single.html',context)
+
 
 
 

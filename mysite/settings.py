@@ -45,13 +45,13 @@ INSTALLED_APPS = [
     'taggit',
     'django_summernote',
 
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
 
     'app1',
     'blog',
-    # 'accounts',
+    'accounts',
 ]
 SITE_ID = 1
 
@@ -64,9 +64,9 @@ MULTI_CAPTCHA_ADMIN = {
     'engine': 'simple-captcha',
 }
 
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED=True
-ACCOUNT_SESSION_REMEMBER=None
+# ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+# ACCOUNT_EMAIL_REQUIRED=True
+# ACCOUNT_SESSION_REMEMBER=None
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -82,16 +82,16 @@ ROOT_URLCONF = 'mysite.urls'
 import os
 
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
+# AUTHENTICATION_BACKENDS = [
+#     'django.contrib.auth.backends.ModelBackend',
+#     'allauth.account.auth_backends.AuthenticationBackend',
+# ]
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR,'templates'),
-        os.path.join(BASE_DIR, 'templates', 'allauth'),
+        # os.path.join(BASE_DIR, 'templates', 'allauth'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
