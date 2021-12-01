@@ -8,6 +8,15 @@ from .forms import SignUpForm
 def login_view(request):
     if not request.user.is_authenticated:
         if request.method=='POST':
+
+            #1
+            a=SignUpForm(request.POST)
+            print(a)
+            if a.is_valid():
+                a.save()
+                # email=a.cleaned_data.get('email')
+                # print(email)
+
             form=AuthenticationForm(request=request,data=request.POST)
             if form.is_valid():
                 # useremail=form.cleaned_data['email'].lower().strip()
