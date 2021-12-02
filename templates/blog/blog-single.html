@@ -41,7 +41,8 @@
 										{% endfor %}
 									</ul>
 									<div class="user-details row">
-										<p class="user-name col-lg-12 col-md-12 col-6"><a href="{%url 'blog:author' author_username=posts.author.username%}">{{posts.author.get_full_name}}</a> <span class="lnr lnr-user"></span></p>
+	
+										<p class="user-name col-lg-12 col-md-12 col-6"><a href="#">{{posts.author.get_full_name}}</a> <span class="lnr lnr-user"></span></p>
 										<p class="date col-lg-12 col-md-12 col-6"><a href="#">{{posts.published_date|date:"d M Y"}}</a> <span class="lnr lnr-calendar-full"></span></p>
 										<p class="view col-lg-12 col-md-12 col-6"><a href="#">{{posts.counted_views}} Views</a> <span class="lnr lnr-eye"></span></p>
 										<p class="comments col-lg-12 col-md-12 col-6"><a href="#">06 Comments</a> <span class="lnr lnr-bubble"></span></p>
@@ -59,43 +60,106 @@
 										{{posts.content|safe}}
 									</p>
 								</div>
-
-
-
 							</div>
-							<div class="navigation-area">
-								<div class="row">
-									{% for prev in previous_post %}
-									<div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+
+
+
+						<div class="navigation-area">
+									<div class="row">
+
+
+
+										<div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+
+
+
+										{% if prevpost %}
 										<div class="thumb">
-											<a href="{{prev.id}}"><img class="img-fluid" src="{{prev.image.url}}" alt=""></a>
+											<a href="{{prevpost.id}}"><img class="img-fluid" src="{{prevpost.image.url}}" alt=""></a>
 										</div>
 										<div class="arrow">
-											<a href="{{prev.id}}"><span class="lnr text-white lnr-arrow-left"></span></a>
+											<a href="{{prevpost.id}}"><span class="lnr text-white lnr-arrow-left"></span></a>
 										</div>
 										<div class="detials">
 											<p>Prev Post</p>
-											<a href="{{prev.id}}"><h4>{{prev.title}}</h4></a>
+											<a href="{{prevpost.id}}"><h4>{{prevpost.title}}</h4></a>
 										</div>
-									</div>
-									{%endfor%}
 
-									{% for next in next_post %}
-									<div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
-										<div class="detials">
-											<p>Next Post</p>
-											<a href="{{next.id}}"><h4>{{next.title}}</h4></a>
+
+										{% else %}
+										<div class="thumb">
+										<a href="{% url 'blog:index' %}"><img class="img-fluid"	src="{% static 'img/travelista.png' %}" alt=""></a>
 										</div>
 										<div class="arrow">
-											<a href="{{next.id}}"><span class="lnr text-white lnr-arrow-right"></span></a>
+										<a href="{% url 'blog:index' %}"><span class="lnr text-white lnr-arrow-left"></span></a>
 										</div>
-										<div class="thumb">
-											<a href="{{next.id}}"><img class="img-fluid" src="{{next.image.url}}" alt=""></a>
+										<div class="detials">
+										<p>Home</p>
+										<a href="{% url 'blog:index' %}"><h4>blog</h4></a>
 										</div>
+										{% endif %}
+
+
+
+										</div>
+
+
+
+										<div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+
+
+
+
+											{% if nextpost %}
+											<div class="detials">
+												<p>Next Post</p>
+												<a href="{{nextpost.id}}"><h4>{{nextpost.title}}</h4></a>
+											</div>
+											<div class="arrow">
+												<a href="{{nextpost.id}}"><span class="lnr text-white lnr-arrow-right"></span></a>
+											</div>
+											<div class="thumb">
+												<a href="{{nextpost.id}}"><img class="img-fluid" src="{{nextpost.image.url}}" alt=""></a>
+											</div>
+
+											{% else %}
+												<div class="thumb">
+												<a href="{% url 'blog:index' %}"><img class="img-fluid"	src="{% static 'img/travelista.png' %}" alt=""></a>
+												</div>
+												<div class="arrow">
+												<a href="{% url 'blog:index' %}"><span class="lnr text-white lnr-arrow-right"></span></a>
+												</div>
+												<div class="detials">
+												<p>Home</p>
+												<a href="{% url 'blog:index' %}"><h4>blog</h4></a>
+												</div>
+												{% endif %}
+
+
+
+										</div>
+
+
+
+
+
+
 									</div>
-									{%endfor%}
 								</div>
-							</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 							<div class="comments-area">
